@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Doctor</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f8ef;
+  color: #24452b;
+}
+header {
+  background: #287a43;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+}
+header h1 { margin: 0; }
+main {
+  max-width: 500px;
+  margin: 25px auto;
+  padding: 20px;
+}
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 3px 12px #0001;
+  text-align: center;
+}
+.upload {
+  display: block;
+  padding: 25px;
+  border: 2px dashed #65a875;
+  border-radius: 14px;
+  cursor: pointer;
+}
+input { margin-top: 15px; max-width: 100%; }
+img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 12px;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  background: #287a43;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  cursor: pointer;
+}
+#result {
+  margin-top: 18px;
+  line-height: 1.7;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #66836b;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌱 Plant Doctor</h1>
+  <p>ผู้ช่วยดูแลสุขภาพพืชของคุณ</p>
+</header>
+
+<main>
+  <div class="card">
+    <h2>🔍 ตรวจสอบสุขภาพพืช</h2>
+    <p>เลือกรูปภาพใบพืชที่ต้องการตรวจสอบ</p>
+
+    <label class="upload">
+      📷 เลือกรูปภาพใบพืช
+      <input type="file" id="photo" accept="image/*">
+    </label>
+
+    <img id="preview" hidden>
+
+    <button onclick="checkPlant()">
+      ตรวจสอบข้อมูลพืช
+    </button>
+
+    <div id="result">
+      ผลการตรวจสอบจะแสดงที่นี่
+    </div>
+  </div>
+</main>
+
+<footer>
+  Plant Doctor 🌿 | ดูแลพืชด้วยเทคโนโลยี
+</footer>
+
+<script>
+const photo = document.getElementById("photo");
+const preview = document.getElementById("preview");
+const result = document.getElementById("result");
+
+photo.addEventListener("change", function() {
+  const file = this.files[0];
+
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.hidden = false;
+    result.innerHTML = "เลือกรูปภาพเรียบร้อยแล้ว 🌱";
+  }
+});
+
+function checkPlant() {
+  if (!photo.files.length) {
+    result.innerHTML = "กรุณาเลือกรูปภาพก่อนค่ะ";
+    return;
+  }
+
+  result.innerHTML =
+    "✅ ได้รับรูปภาพเรียบร้อยแล้ว<br>" +
+    "ขณะนี้ระบบยังไม่ได้เชื่อมต่อ AI วิเคราะห์โรคพืช<br>" +
+    "กรุณาตรวจสอบอาการร่วมกับผู้เชี่ยวชาญด้านพืช";
+}
+</script>
+
+</body>
+</html>
