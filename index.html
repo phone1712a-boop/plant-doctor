@@ -75,7 +75,7 @@ footer {
 <body>
 
 <header>
-  <h1>🌱 Plant Doctor</h1>
+  <h1>🌱 </h1>
   <p>ผู้ช่วยดูแลสุขภาพพืชของคุณ</p>
 </header>
 
@@ -120,16 +120,53 @@ photo.addEventListener("change", function() {
   }
 });
 
-function checkPlant() {
+async function checkPlant() {
   if (!photo.files.length) {
-    result.innerHTML = "กรุณาเลือกรูปภาพก่อนค่ะ";
+    result.textContent = "กรุณาเลือกรูปภาพก่อนค่ะ";
     return;
   }
 
-  result.innerHTML =
-    "✅ ได้รับรูปภาพเรียบร้อยแล้ว<br>" +
-    "ขณะนี้ระบบยังไม่ได้เชื่อมต่อ AI วิเคราะห์โรคพืช<br>" +
-    "กรุณาตรวจสอบอาการร่วมกับผู้เชี่ยวชาญด้านพืช";
+  const file = photo.files[0];
+  result.textContent = "🌱 กำลังส่งรูปให้ AI วิเคราะห์...";
+
+  try {
+    const imageData = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error("อ่านรูปภาพไม่สำเร็จ"));
+      reader.readAsDataURL(file);
+    });
+
+    const imageBase64 = imageData.split(",")[1];
+
+    const response = await fetch(
+      "https://plant-doctor-api.phone1712a.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          imageBase64: imageBase64,
+          mimeType: file.type
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "เชื่อมต่อ AI ไม่สำเร็จ");
+    }
+
+    result.textContent =
+      "🌿 ผลการวิเคราะห์จาก AI\n" +
+      (data.diagnosis || "ยังไม่พบผลการวิเคราะห์");
+
+  } catch (error) {
+    result.textContent =
+      "❌ เกิดข้อผิดพลาด: " + error.message;
+  }
 }
 </script>
 
