@@ -1,174 +1,828 @@
-
 <!DOCTYPE html>
+
 <html lang="th">
+
 <head>
-  <link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon.png">
-<meta name="theme-color" content="#228B22">
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plant Doctor</title>
+
+<meta name="theme-color" content="#287a43">
+
+<title>Plant Doctor | ผู้ช่วยดูแลพืช</title>
+
 <style>
-* { box-sizing: border-box; }
+
+​{ box-sizing: border-box; }
+
 body {
+
   margin: 0;
+
   font-family: Arial, sans-serif;
+
   background: #f0f8ef;
+
   color: #24452b;
+
 }
+
 header {
-  background: #287a43;
+
+  background: linear-gradient(135deg,#287a43,#55a86b);
+
   color: white;
+
   text-align: center;
-  padding: 25px 15px;
+
+  padding: 30px 15px;
+
 }
-header h1 { margin: 0; }
+
+header h1 { margin: 0; font-size: 30px; }
+
+header p { margin-bottom: 0; }
+
 main {
-  max-width: 500px;
+
+  max-width: 650px;
+
   margin: 25px auto;
-  padding: 20px;
+
+  padding: 15px;
+
 }
+
 .card {
+
   background: white;
+
   padding: 22px;
+
   border-radius: 18px;
+
   box-shadow: 0 3px 12px #0001;
-  text-align: center;
+
+  margin-bottom: 20px;
+
 }
-.upload {
+
+h2 { color: #287a43; }
+
+label {
+
   display: block;
-  padding: 25px;
+
+  margin: 13px 0 7px;
+
+  font-weight: bold;
+
+}
+
+select, textarea {
+
+  width: 100%;
+
+  padding: 12px;
+
+  border: 1px solid #b8d5bd;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+
+  background: white;
+
+}
+
+.upload {
+
+  display: block;
+
+  padding: 22px;
+
   border: 2px dashed #65a875;
+
   border-radius: 14px;
-  cursor: pointer;
-}
-input { margin-top: 15px; max-width: 100%; }
-img {
-  width: 100%;
-  max-height: 280px;
-  object-fit: contain;
-  margin-top: 15px;
-  border-radius: 12px;
-}
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 18px;
-  background: #287a43;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 17px;
-  cursor: pointer;
-}
-#result {
-  margin-top: 18px;
-  line-height: 1.7;
-}
-footer {
+
   text-align: center;
-  padding: 20px;
-  color: #66836b;
+
+  cursor: pointer;
+
+  background: #f7fff7;
+
 }
+
+input[type=file] { max-width: 100%; }
+
+#preview {
+
+  width: 100%;
+
+  max-height: 280px;
+
+  object-fit: contain;
+
+  margin-top: 15px;
+
+  border-radius: 12px;
+
+}
+
+.symptoms {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+}
+
+.symptoms label {
+
+  font-weight: normal;
+
+  background: #f0f8ef;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  margin: 0;
+
+}
+
+.symptoms input {
+
+  margin-right: 7px;
+
+  accent-color: #287a43;
+
+}
+
+button {
+
+  width: 100%;
+
+  padding: 14px;
+
+  margin-top: 18px;
+
+  background: #287a43;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-size: 17px;
+
+  cursor: pointer;
+
+}
+
+button:hover { background: #1e6335; }
+
+.secondary {
+
+  background: #e7f3e8;
+
+  color: #287a43;
+
+}
+
+#result {
+
+  line-height: 1.8;
+
+  margin-top: 15px;
+
+}
+
+.result-box {
+
+  background: #f0f8ef;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  margin-top: 12px;
+
+}
+
+.history-item {
+
+  border-bottom: 1px solid #ddd;
+
+  padding: 12px 0;
+
+  line-height: 1.6;
+
+}
+
+.small {
+
+  font-size: 13px;
+
+  color: #66836b;
+
+}
+
+footer {
+
+  text-align: center;
+
+  padding: 20px;
+
+  color: #66836b;
+
+}
+
+@media(max-width:420px) {
+
+  .symptoms { grid-template-columns: 1fr; }
+
+}
+
 </style>
+
 </head>
+
 <body>
 
 <header>
-  <h1>🌱 </h1>
-  <p>ผู้ช่วยดูแลสุขภาพพืชของคุณ</p>
+
+  <h1>🌱 Plant Doctor</h1>
+
+  <p>ผู้ช่วยตรวจสอบและดูแลสุขภาพพืชของคุณ</p>
+
 </header>
 
 <main>
-  <div class="card">
-    <h2>🔍 ตรวจสอบสุขภาพพืช</h2>
-    <p>เลือกรูปภาพใบพืชที่ต้องการตรวจสอบ</p>
 
-    <label class="upload">
-      📷 เลือกรูปภาพใบพืช
-      <input type="file" id="photo" accept="image/*">
-    </label>
+<div class="card">
 
-    <img id="preview" hidden>
+  <h2>🔍 ตรวจสอบสุขภาพพืช</h2>
 
-    <button onclick="checkPlant()">
-      ตรวจสอบข้อมูลพืช
-    </button>
+  <p>เลือกรูปภาพและระบุอาการของพืชที่ต้องการตรวจสอบ</p>
 
-    <div id="result">
-      ผลการตรวจสอบจะแสดงที่นี่
-    </div>
+  <label>1. เลือกประเภทพืช</label>
+
+  <select id="plantType">
+
+    <option value="">-- เลือกประเภทพืช --</option>
+
+    <option>ผัก</option>
+
+    <option>ผลไม้</option>
+
+    <option>ไม้ดอก</option>
+
+    <option>ไม้ประดับ</option>
+
+    <option>พืชไร่</option>
+
+    <option>ไม้ยืนต้น</option>
+
+    <option>สมุนไพร</option>
+
+    <option>พืชชนิดอื่น</option>
+
+  </select>
+
+  <label>2. ชื่อพืช (ถ้าทราบ)</label>
+
+  <input id="plantName" type="text"
+
+    placeholder="เช่น มะเขือเทศ กุหลาบ มะนาว"
+
+    style="width:100%;padding:12px;border:1px solid #b8d5bd;border-radius:10px;font-size:16px;">
+
+  <label>3. รูปภาพพืช</label>
+
+  <label class="upload">
+
+    📷 แตะเพื่อเลือกรูปภาพ
+
+    <input type="file" id="photo" accept="image/*">
+
+  </label>
+
+  <img id="preview" hidden alt="ภาพพืชที่เลือก">
+
+  <label>4. เลือกอาการที่พบ (เลือกได้หลายข้อ)</label>
+
+  <div class="symptoms">
+
+    <label><input type="checkbox" value="yellow"> 🍂 ใบเหลือง</label>
+
+    <label><input type="checkbox" value="spots"> 🟤 ใบมีจุด</label>
+
+    <label><input type="checkbox" value="wilt"> 🥀 ใบเหี่ยว</label>
+
+    <label><input type="checkbox" value="dry"> 🍁 ใบแห้งหรือขอบไหม้</label>
+
+    <label><input type="checkbox" value="white"> ⚪ มีผงสีขาว</label>
+
+    <label><input type="checkbox" value="holes"> 🐛 ใบมีรูหรือถูกกัด</label>
+
+    <label><input type="checkbox" value="curl"> 🍃 ใบม้วนงอ</label>
+
+    <label><input type="checkbox" value="growth"> 🌱 โตช้าหรือไม่เจริญเติบโต</label>
+
   </div>
+
+  <label>5. รายละเอียดเพิ่มเติม</label>
+
+  <textarea id="details" rows="3"
+
+    placeholder="เช่น เริ่มมีอาการเมื่อ 3 วันที่แล้ว"></textarea>
+
+  <button onclick="checkPlant()">🌿 ตรวจสอบอาการพืช</button>
+
+  <div id="result" aria-live="polite">
+
+    ผลการตรวจสอบจะแสดงที่นี่
+
+  </div>
+
+</div>
+
+<div class="card">
+
+  <h2>📋 ประวัติการตรวจ</h2>
+
+  <div id="history">
+
+    ยังไม่มีประวัติการตรวจ
+
+  </div>
+
+  <button class="secondary" onclick="clearHistory()">
+
+    ล้างประวัติ
+
+  </button>
+
+</div>
+
+<div class="card">
+
+  <h2>💡 คำแนะนำเบื้องต้น</h2>
+
+  <p>🌤️ ให้พืชได้รับแสงแดดเหมาะสม</p>
+
+  <p>💧 รดน้ำตามความต้องการของพืช</p>
+
+  <p>🌱 หมั่นตรวจดูใบและลำต้น</p>
+
+  <p>🪴 ดูแลดินและบริเวณปลูกให้เหมาะสม</p>
+
+</div>
+
 </main>
 
 <footer>
-  Plant Doctor 🌿 | ดูแลพืชด้วยเทคโนโลยี
+
+  Plant Doctor 🌿
+
+  <br>ผู้ช่วยดูแลสุขภาพพืช
+
 </footer>
 
 <script>
+
 const photo = document.getElementById("photo");
+
 const preview = document.getElementById("preview");
+
 const result = document.getElementById("result");
 
 photo.addEventListener("change", function() {
+
   const file = this.files[0];
 
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    preview.hidden = false;
-    result.innerHTML = "เลือกรูปภาพเรียบร้อยแล้ว 🌱";
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+
+    alert("กรุณาเลือกไฟล์รูปภาพ");
+
+    this.value = "";
+
+    return;
+
   }
+
+  if (file.size > 8 * 1024 * 1024) {
+
+    alert("กรุณาเลือกรูปภาพขนาดไม่เกิน 8 MB");
+
+    this.value = "";
+
+    return;
+
+  }
+
+  preview.src = URL.createObjectURL(file);
+
+  preview.hidden = false;
+
+  result.textContent = "เลือกรูปภาพเรียบร้อยแล้ว 🌱";
+
 });
 
-async function checkPlant() {
-  if (!photo.files.length) {
-    result.textContent = "กรุณาเลือกรูปภาพก่อนค่ะ";
-    return;
+const symptomData = {
+
+  yellow: {
+
+    title: "ใบเหลือง",
+
+    causes: [
+
+      "น้ำมากเกินไปหรือดินระบายน้ำไม่ดี",
+
+      "พืชได้รับน้ำไม่เพียงพอ",
+
+      "ธาตุอาหารในดินไม่สมดุล"
+
+    ],
+
+    care: "ตรวจความชื้นในดินก่อนรดน้ำ ตรวจรูระบายน้ำ และสังเกตว่าใบเหลืองเกิดกับใบแก่หรือใบอ่อน"
+
+  },
+
+  spots: {
+
+    title: "ใบมีจุด",
+
+    causes: [
+
+      "โรคใบจุดจากเชื้อรา",
+
+      "โรคจากแบคทีเรีย",
+
+      "ความเสียหายจากสภาพแวดล้อม"
+
+    ],
+
+    care: "หลีกเลี่ยงการทำให้ใบเปียกนาน ๆ เพิ่มการถ่ายเทอากาศ และตัดใบที่เสียหายมากโดยใช้เครื่องมือสะอาด"
+
+  },
+
+  wilt: {
+
+    title: "ใบเหี่ยว",
+
+    causes: [
+
+      "ขาดน้ำ",
+
+      "รากเสียหายหรือมีน้ำขัง",
+
+      "โรคที่เกี่ยวข้องกับระบบรากหรือลำต้น"
+
+    ],
+
+    care: "ตรวจความชื้นของดินและสภาพราก อย่าเพิ่มน้ำทันทีหากดินยังแฉะ"
+
+  },
+
+  dry: {
+
+    title: "ใบแห้งหรือขอบไหม้",
+
+    causes: [
+
+      "ขาดน้ำหรือความชื้นไม่เหมาะสม",
+
+      "ได้รับแสงหรือความร้อนมากเกินไป",
+
+      "ปุ๋ยหรือเกลือสะสมในดิน"
+
+    ],
+
+    care: "ตรวจสภาพดินและแสงแดด หลีกเลี่ยงการใส่ปุ๋ยเข้มข้นเกินไป"
+
+  },
+
+  white: {
+
+    title: "มีผงสีขาว",
+
+    causes: [
+
+      "อาจเป็นโรคราแป้ง",
+
+      "อาจเป็นคราบแร่ธาตุหรือน้ำ",
+
+      "อาจเป็นร่องรอยจากแมลงบางชนิด"
+
+    ],
+
+    care: "ตรวจดูว่าผงเช็ดออกได้หรือไม่ และดูด้านใต้ใบเพื่อหาสัญญาณของแมลง"
+
+  },
+
+  holes: {
+
+    title: "ใบมีรูหรือถูกกัด",
+
+    causes: [
+
+      "หนอนหรือแมลงกัดกินใบ",
+
+      "หอยหรือทาก",
+
+      "แมลงศัตรูพืชชนิดอื่น"
+
+    ],
+
+    care: "ตรวจดูใต้ใบและรอบต้นในช่วงเช้าหรือเย็น เก็บศัตรูพืชที่พบและติดตามความเสียหาย"
+
+  },
+
+  curl: {
+
+    title: "ใบม้วนงอ",
+
+    causes: [
+
+      "เพลี้ยหรือแมลงดูดน้ำเลี้ยง",
+
+      "น้ำไม่เพียงพอหรืออากาศร้อน",
+
+      "ความผิดปกติจากสารเคมีหรือสภาพแวดล้อม"
+
+    ],
+
+    care: "ตรวจใต้ใบว่ามีแมลงหรือไม่ และทบทวนการให้น้ำรวมถึงการใช้สารเคมีใกล้ต้น"
+
+  },
+
+  growth: {
+
+    title: "โตช้าหรือไม่เจริญเติบโต",
+
+    causes: [
+
+      "ได้รับแสงไม่เหมาะสม",
+
+      "ดินหรือธาตุอาหารไม่เหมาะสม",
+
+      "รากมีปัญหาหรือพื้นที่ปลูกไม่เพียงพอ"
+
+    ],
+
+    care: "ตรวจสภาพดิน แสงแดด การระบายน้ำ และพื้นที่ของรากก่อนปรับการดูแล"
+
   }
 
-  const file = photo.files[0];
-  result.textContent = "🌱 กำลังส่งรูปให้ AI วิเคราะห์...";
+};
+
+function getHistory() {
 
   try {
-    const imageData = await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(new Error("อ่านรูปภาพไม่สำเร็จ"));
-      reader.readAsDataURL(file);
-    });
 
-    const imageBase64 = imageData.split(",")[1];
+    return JSON.parse(localStorage.getItem("plantHistory") || "[]");
 
-    const response = await fetch(
-      "https://plant-doctor-api.phone1712a.workers.dev/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          imageBase64: imageBase64,
-          mimeType: file.type
-        })
-      }
+  } catch {
+
+    return [];
+
+  }
+
+}
+
+function showHistory() {
+
+  const history = getHistory();
+
+  const box = document.getElementById("history");
+
+  if (!history.length) {
+
+    box.textContent = "ยังไม่มีประวัติการตรวจ";
+
+    return;
+
+  }
+
+  box.innerHTML = "";
+
+  history.forEach(item => {
+
+    const div = document.createElement("div");
+
+    div.className = "history-item";
+
+    const name = document.createElement("strong");
+
+    name.textContent = item.name + " (" + item.type + ")";
+
+    const date = document.createElement("div");
+
+    date.className = "small";
+
+    date.textContent = item.date;
+
+    const symptoms = document.createElement("div");
+
+    symptoms.textContent = "อาการ: " + item.symptoms;
+
+    div.append(name, date, symptoms);
+
+    box.appendChild(div);
+
+  });
+
+}
+
+function clearHistory() {
+
+  if (!confirm("ต้องการล้างประวัติทั้งหมดหรือไม่?")) return;
+
+  localStorage.removeItem("plantHistory");
+
+  showHistory();
+
+}
+
+function checkPlant() {
+
+  const type = document.getElementById("plantType").value;
+
+  const name = document.getElementById("plantName").value.trim() || "ไม่ระบุชื่อพืช";
+
+  const details = document.getElementById("details").value.trim();
+
+  const selected = Array.from(
+
+    document.querySelectorAll(".symptoms input:checked")
+
+  ).map(input => input.value);
+
+  if (!type) {
+
+    result.textContent = "กรุณาเลือกประเภทพืชก่อนค่ะ";
+
+    return;
+
+  }
+
+  if (!selected.length) {
+
+    result.textContent = "กรุณาเลือกอาการที่พบอย่างน้อย 1 ข้อ";
+
+    return;
+
+  }
+
+  const findings = selected.map(key => symptomData[key]);
+
+  let html = `
+
+    <div class="result-box">
+
+      <h3>🌿 ผลการประเมินเบื้องต้น</h3>
+
+      <p><strong>ชื่อพืช:</strong> ${escapeHTML(name)}</p>
+
+      <p><strong>ประเภท:</strong> ${escapeHTML(type)}</p>
+
+      <p><strong>อาการที่พบ:</strong></p>
+
+      <ul>
+
+        ${findings.map(item => <li>${item.title}</li>).join("")}
+
+      </ul>
+
+    </div>
+
+  `;
+
+  findings.forEach(item => {
+
+    html += `
+
+      <div class="result-box">
+
+        <h3>🔎 ${item.title}</h3>
+
+        <strong>สาเหตุที่เป็นไปได้</strong>
+
+        <ul>${item.causes.map(c => <li>${c}</li>).join("")}</ul>
+
+        <strong>วิธีดูแลเบื้องต้น</strong>
+
+        <p>${item.care}</p>
+
+      </div>
+
+    `;
+
+  });
+
+  if (details) {
+
+    html += `
+
+      <div class="result-box">
+
+        <strong>รายละเอียดเพิ่มเติม</strong>
+
+        <p>${escapeHTML(details)}</p>
+
+      </div>
+
+    `;
+
+  }
+
+  html += `
+
+    <div class="result-box">
+
+      <strong>⚠️ ข้อควรทราบ</strong>
+
+      <p>ผลนี้เป็นการประเมินจากอาการที่เลือก ไม่ใช่การวินิจฉัยโรคจากภาพถ่าย
+
+      อาการเดียวกันอาจเกิดได้จากหลายสาเหตุ หากอาการรุนแรงหรือลุกลาม
+
+      ควรปรึกษาผู้เชี่ยวชาญด้านพืช</p>
+
+    </div>
+
+  `;
+
+  result.innerHTML = html;
+
+  const history = getHistory();
+
+  history.unshift({
+
+    name,
+
+    type,
+
+    symptoms: findings.map(item => item.title).join(", "),
+
+    date: new Date().toLocaleString("th-TH")
+
+  });
+
+  try {
+
+    localStorage.setItem(
+
+      "plantHistory",
+
+      JSON.stringify(history.slice(0, 20))
+
     );
 
-    const data = await response.json();
+  } catch {
 
-    if (!response.ok) {
-      throw new Error(data.error || "เชื่อมต่อ AI ไม่สำเร็จ");
-    }
+    // หากอุปกรณ์ปิดการบันทึกข้อมูล เว็บยังแสดงผลได้
 
-    result.textContent =
-      "🌿 ผลการวิเคราะห์จาก AI\n" +
-      (data.diagnosis || "ยังไม่พบผลการวิเคราะห์");
-
-  } catch (error) {
-    result.textContent =
-      "❌ เกิดข้อผิดพลาด: " + error.message;
   }
+
+  showHistory();
+
 }
+
+function escapeHTML(value) {
+
+  return value.replace(/[&<>"']/g, char => ({
+
+    "&": "&amp;",
+
+    "<": "&lt;",
+
+    ">": "&gt;",
+
+    '"': "&quot;",
+
+    "'": "&#39;"
+
+  })[char]);
+
+}
+
+showHistory();
+
 </script>
 
 </body>
+
 </html>
+
+  
+
+
+      
